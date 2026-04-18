@@ -7,4 +7,4 @@ gameController.playRound(index);
 
 ### gameBoard.getBoard(); if you want to see the current board in the game
 
-## UI implementation later..
+UI implementation later..

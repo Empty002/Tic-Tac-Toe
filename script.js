@@ -37,7 +37,47 @@ const gameController = (function () {
     gameBoard.placeMark(index, activePlayer.marker);
     console.log(`${activePlayer.name} marked index ${index}`);
 
+    const winnerMark = checkWinner();
+
+    if (winnerMark) {
+      console.log(
+        `GAME OVER! The winner is ${activePlayer.name} (${winnerMark})`,
+      );
+
+      activePlayer = null;
+      return;
+    }
+
+    if (!gameBoard.getBoard().includes("")) {
+      console.log("It's a TIE!");
+      activePlayer = null;
+      return;
+    }
+
     switchPlayer();
+  };
+
+  const checkWinner = () => {
+    const board = gameBoard.getBoard();
+    const winConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // Rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // Columns
+      [0, 4, 8],
+      [2, 4, 6], // Diagonals
+    ];
+
+    for (let condition of winConditions) {
+      const [a, b, c] = condition;
+
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return board[a]; // Returns "X" or "O"
+      }
+    }
+    return null;
   };
 
   return { playRound, gameStarter };
